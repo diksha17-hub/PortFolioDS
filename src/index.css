@@ -1,0 +1,91 @@
+/* @import "tailwindcss";
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
+body { background-color: #0a0e1a; color: #e2e8f0; font-family: 'Segoe UI', sans-serif; overflow-x: hidden; width: 100%; }
+
+@layer utilities {
+  .gradient-text {
+    @apply bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent;
+  }
+  .neon-border {
+    border: 1px solid rgba(34,211,238,0.3);
+    box-shadow: 0 0 15px rgba(34,211,238,0.1);
+  }
+  .card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+  }
+  .section-title {
+    @apply text-3xl font-bold text-white mb-2;
+  }
+} */
+@import "tailwindcss";
+
+/* Tailwind already resets margin/padding; only keep box-sizing, inside a layer */
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; overflow-x: hidden; }
+  body {
+    background-color: #0a0e1a;
+    color: #e2e8f0;
+    font-family: 'Segoe UI', sans-serif;
+    overflow-x: hidden;
+    width: 100%;
+  }
+}
+
+@layer utilities {
+  .gradient-text {
+    background: linear-gradient(90deg, #22d3ee, #3b82f6, #a855f7, #22d3ee);
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: gradientShift 6s linear infinite;
+  }
+  .neon-border {
+    border: 1px solid rgba(34,211,238,0.3);
+    box-shadow: 0 0 15px rgba(34,211,238,0.1);
+    transition: box-shadow .3s, border-color .3s;
+  }
+  .neon-border:hover { box-shadow: 0 0 25px rgba(34,211,238,0.18); }
+  .card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+  }
+  .section-title {
+    @apply text-3xl font-bold text-white mb-2;
+  }
+  .float { animation: float 5s ease-in-out infinite; }
+  .shine { position: relative; overflow: hidden; }
+  .shine::after {
+    content: ''; position: absolute; top: 0; left: -75%;
+    width: 50%; height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(255,255,255,.35), transparent);
+    transform: skewX(-20deg);
+  }
+  .shine:hover::after { animation: shine .8s; }
+}
+
+@keyframes gradientShift { to { background-position: 300% 0; } }
+@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
+@keyframes shine { to { left: 130%; } }
+@keyframes borderGlow {
+  0%, 100% { box-shadow: 0 0 15px rgba(34,211,238,0.1); }
+  50% { box-shadow: 0 0 30px rgba(34,211,238,0.25), 0 0 60px rgba(168,85,247,0.1); }
+}
+
+/* scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #0a0e1a; }
+::-webkit-scrollbar-thumb { background: linear-gradient(#22d3ee, #3b82f6); border-radius: 9999px; }
+
+/* selection */
+::selection { background: rgba(34,211,238,0.25); color: #fff; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
